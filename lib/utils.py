@@ -1,5 +1,5 @@
-import config
-import vim_api as vim
+import config 
+import vim
 
 def get_basepath(filepath):
     pass

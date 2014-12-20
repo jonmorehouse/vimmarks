@@ -6,5 +6,7 @@ class Bookmark(object):
 
         pass
     
-    def __init__(self, ):
+    def __init__(self, test):
+
+        pass
 

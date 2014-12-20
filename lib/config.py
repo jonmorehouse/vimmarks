@@ -1,13 +1,27 @@
-import vim_api as vim
+import vim
+import utils
+import sys
 
 class ConfigMetaclass(type):
 
-    default_values = {
-        "": ""
-    }
+    variable_namespace = "VimMark"
 
-    def __getattr__(cls, *args, **kwargs):
-        return cls.values.get(args[0])
+    @classmethod
+    def to_vim_varname(self, varname):
+        return "".join(piece.capitalize() for piece in varname.split("_"))
+
+    def __getattr__(cls, name):
+        varname = cls.to_vim_varname(name)
+
+        value = vim.eval("g:%s%s" % (cls.variable_namespace, name))
+
+        if name.endswith("int"):
+            return int(value)
+        if name.endswith("float"):
+            return float(value)
+
+        return value 
+
 
 class Config(object):
     '''
@@ -15,3 +29,4 @@ class Config(object):
     '''
     __metaclass__ = ConfigMetaclass
 
+sys.modules[__name__] = Config
