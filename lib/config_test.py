@@ -1,7 +1,8 @@
-import test_setup
 import mock
-import vim
 
+import test_setup
+
+import vim
 import config
 
 def test_to_vim_varname():

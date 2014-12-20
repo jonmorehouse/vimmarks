@@ -14,7 +14,6 @@ class ConfigMetaclass(type):
 
     def __getattr__(cls, name):
         varname = cls.to_vim_varname(name)
-
         value = vim.eval("g:%s%s" % (cls.variable_namespace, name))
         
         if value == "":

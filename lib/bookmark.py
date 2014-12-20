@@ -1,12 +1,13 @@
 
-class Bookmark(object):
+class Bookmark():
+    pass
 
-    @classmethod
-    def bookmarks_for_path(cls, filepath):
 
-        pass
-    
-    def __init__(self, test):
+class DirectoryBookmark():
+    pass
 
-        pass
+class FileBookmark():
+    pass
+
+
 
