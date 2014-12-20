@@ -1,6 +1,7 @@
 import sys
 import tempfile
 import os
+import logging
 
 try:
     import vim
@@ -15,9 +16,9 @@ class MockMetaclass(type):
 class VimMock(object):
     __metaclass__ = MockMetaclass
 
-if not vim:
-    sys.modules["vim"] = VimMock
-
+# NOTE replace the builtin vim module
+sys.modules["vim"] = VimMock
+logging.warning("vim module mocked out. Make sure you aren't seeing this inside of vim")
 
 # NOTE vimmarks file for test
 import config
