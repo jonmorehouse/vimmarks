@@ -1,6 +1,6 @@
-import json
-
 import test_setup
+
+import json
 
 import config
 import store

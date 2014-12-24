@@ -20,9 +20,7 @@ class Project(object):
 
         pass
 
-class GlobalProject():
-    pass
-
-
+    def get_bookmarks(self):
+        pass
 
 

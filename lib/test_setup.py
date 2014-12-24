@@ -24,3 +24,4 @@ logging.warning("vim module mocked out. Make sure you aren't seeing this inside 
 import config
 config.store_file = tempfile.NamedTemporaryFile()
 config.store_filepath = config.store_file.name
+

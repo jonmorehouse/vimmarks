@@ -7,6 +7,7 @@ class ConfigMetaclass(type):
 
     variable_namespace = "VimMark"
     store_filepath = os.path.join(os.getenv("HOME"), ".vimmarks")
+    vim = vim
 
     @classmethod
     def to_vim_varname(self, varname):
@@ -14,7 +15,7 @@ class ConfigMetaclass(type):
 
     def __getattr__(cls, name):
         varname = cls.to_vim_varname(name)
-        value = vim.eval("g:%s%s" % (cls.variable_namespace, name))
+        value = cls.vim.eval("g:%s%s" % (cls.variable_namespace, name))
         
         if value == "":
             return None
