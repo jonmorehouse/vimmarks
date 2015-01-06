@@ -5,22 +5,35 @@ import re
 import tempfile
 import types
 import os
+import uuid
 
 class Params(object):
     @classmethod
     def __setattribute__(self, *args, **kwargs):
+        print "hi"
         pass
 
-class BookmarkParams(Params):
-    tempfile = lambda x, o: tempfile.NamedTemporaryFile()
-    filepath = lambda x, o: o.tempfile.name
-    name = "bookmark"
-    shortcut = "aa"
-    project = lambda x, o: os.path.dirname(o.filepath)
-    alias = "main"
+    @classmethod
+    def memoized_lambda(cls, eval_string):
+        uid = str(uuid.uuid1())
 
-class FullBookmarkParams(BookmarkParams):
-    pass
+        def __(cls, uid, eval_string):
+            if not hasattr(cls, uid):
+                setattr(cls, uid, eval(eval_string))
+            return getattr(cls, uid)
+
+        _ = lambda x: __(cls, uid, eval_string)
+        return _
+
+class BookmarkParams(Params):
+    tempfile = Params.memoized_lambda("tempfile.NamedTemporaryFile()")
+
+    #name = "bookmark"
+    #shortcut = "aa"
+    #project = lambda x: os.path.dirname(o.filepath)
+    #alias = "main"
+
+class FullBookmarkParams(BookmarkParams): pass
 
 class Fixture(object):
     def __init__(self, *args, **kwargs):
@@ -33,7 +46,7 @@ class Fixture(object):
             value = getattr(self.params_object, attr)
 
             if hasattr(value, "__call__"):
-                value = value(self)
+                value = value()
 
             self.data[attr] = value
             setattr(self, attr, value)
