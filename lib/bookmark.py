@@ -16,8 +16,6 @@ class Bookmark(object):
 
     optional_attrs = ["cursor"]
 
-
-
     @classmethod
     def create(cls, *args, **kwargs):
         '''
@@ -32,15 +30,20 @@ class Bookmark(object):
 
         for attribute in cls.required_attrs + cls.optional_attrs:
             if kwargs.get(attribute):
-                setattr(obj, kwargs.get(attribute))
+                setattr(obj, attribute, kwargs.get(attribute))
 
         obj.save()
         return obj
 
-    def __init__(self):
-        self.id = uuid.uuid.v1()
+    @classmethod
+    def load_from_json_string(cls, json_string):
+        pass
+
+    def __init__(self, **kw):
+        self.id = kw.get("id", str(uuid.uuid1()))
 
     def save(self, **kwargs):
-        store["bookmarks"][self.id] = json.dumps(self.__dict__)
+        pass
+        #store["bookmarks"][self.id] = json.dumps(self.__dict__)
 
 
