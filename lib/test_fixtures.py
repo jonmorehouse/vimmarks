@@ -26,21 +26,22 @@ class Params(object):
         return _
 
 class BookmarkParams(Params):
-    tempfile = Params.memoized_lambda("tempfile.NamedTemporaryFile()")
+    name = "bookmark"
+    shortcut = "aa"
+    alias = "main"
 
-    #name = "bookmark"
-    #shortcut = "aa"
-    #project = lambda x: os.path.dirname(o.filepath)
-    #alias = "main"
-
-class FullBookmarkParams(BookmarkParams): pass
+    def __init__(self):
+        self.tempfile = tempfile.NamedTemporaryFile()
+        self.filepath = self.tempfile.name
+        self.project = os.path.dirname(self.filepath)
 
 class Fixture(object):
     def __init__(self, *args, **kwargs):
         self.params_object = self.params_klass()
         self.data = {}
         
-        attributes = [attr for attr in self.params_klass.__dict__.iterkeys() if not re.match(r'^__.*__$', attr)]
+        all_attributes = self.params_klass.__dict__.keys() + self.params_object.__dict__.keys()
+        attributes = [attr for attr in all_attributes if not re.match(r'^__.*__$', attr)]
 
         for attr in attributes:
             value = getattr(self.params_object, attr)

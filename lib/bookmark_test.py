@@ -11,14 +11,9 @@ class TestBookmark(object):
         fixture_klass = test_fixtures.BookmarkFixture
         f = fixture_klass()
 
-        print f.tempfile
-        print f.tempfile
-        print f.tempfile
-
-
-        #bookmark = B.create(**f.data)
-        #for attribute in B.required_attrs: 
-            #assert getattr(bookmark, attribute) == f.data[attribute]
+        bookmark = B.create(**f.data)
+        for attribute in B.required_attrs: 
+            assert getattr(bookmark, attribute) == f.data[attribute]
 
 
 
