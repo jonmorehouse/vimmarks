@@ -1,1 +1,0 @@
-py.test --capture=no lib/*_test.py
