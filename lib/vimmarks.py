@@ -1,6 +1,7 @@
 import api
 
 BANNED_GLOBAL_MAPPINGS = ('c', 'x', 'm', 'q')
+BANNED_PROJECT_MAPPINGS = ()
 
 try:
     import vim
@@ -29,6 +30,30 @@ def setup_vimmarks():
         if mapping not in BANNED_GLOBAL_MAPPINGS:
             cb("m", mapping, "open_global_bookmark")
             cb("M", mapping, "save_global_bookmark")
+
+        if mapping not in BANNED_PROJECT_MAPPINGS:
+            cb('f', mapping, 'open_project_bookmark')
+            cb('F', mapping, 'save_project_bookmark')
+
+
+def create_project():
+    api.create_project(vim.current.buffer.name)
+
+
+def lock_project():
+    pass
+
+
+def save_project_bookmark(mapping):
+    filepath = vim.current.buffer.name
+    line, column = vim.current.window.cursor
+
+    project = api.save_project_bookmark(mapping, filepath, line)
+
+
+def open_project_bookmark(mapping):
+
+    pass
 
 
 def open_global_bookmark(mapping):

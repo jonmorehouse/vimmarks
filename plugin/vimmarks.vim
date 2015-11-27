@@ -13,7 +13,6 @@ import sys
 import vim
 from os.path import abspath, join
 
-# vimmarks.setup_global_bookmarks()
 base_path = abspath(join(vim.eval("expand('<sfile>:p:h')"), "../lib"))
 sys.path.insert(0, base_path)
 
@@ -27,4 +26,5 @@ if vim.eval('g:vimmarks_debug'):
 vimmarks.setup_vimmarks()
 EOF
 
-
+command! VimmarksCreateProject :python vimmarks.create_project()
+command! VimmarksLockProject :python vimmarks.lock_project()
